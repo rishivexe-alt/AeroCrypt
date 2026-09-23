@@ -1,0 +1,6 @@
+# Public sample telemetry — non-sensitive example
+# Format:
+# packet,temp,pressure,ax,ay,az,gx,gy,gz
+
+1,28.49,918.08,0.001,0.056,1.009,0.50,1.27,-0.08
+2,28.48,918.07,0.005,0.057,1.012,0.40,1.20,0.37

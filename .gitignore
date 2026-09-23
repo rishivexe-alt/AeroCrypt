@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Data / logs
+*.db
+*.sqlite
+*.sqlite3
+*.csv
+*.log
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Arduino
+*.bin
+*.elf
