@@ -1,55 +1,22 @@
-/*
-  AeroCrypt - ESP32 Ground Receiver
-  PUBLIC-SAFE RELEASE VERSION
-
-  Purpose:
-    SX1278 LoRa RX -> AES-128-GCM authenticate/decrypt -> USB Serial
-
-  Public release rules:
-    - Do NOT place real AES keys, Wi-Fi passwords, personal names, hostnames,
-      private IPs, tokens, or credentials in this file.
-    - The AES key below is an EXAMPLE PLACEHOLDER and must be replaced on
-      both TX and RX for a real test, preferably through a private/local
-      configuration mechanism.
-
-  Packet format:
-    [MAGIC 2B][VERSION 1B][NONCE 12B][CIPHERTEXT N B][TAG 16B]
-  Plaintext:
-    packet,temp,pressure,ax,ay,az,gx,gy,gz
-  Optional GPS extension:
-    packet,temp,pressure,ax,ay,az,gx,gy,gz,latitude,longitude,satellites,hdop
-
-  LoRa configuration:
-    433 MHz, SF7, BW125 kHz, CR4/5, CRC enabled, TX power 17 dBm.
-*/
-
 #include <SPI.h>
 #include <LoRa.h>
 #include "mbedtls/gcm.h"
-
-// ---------------- PUBLIC-SAFE CONFIGURATION ----------------
 static const uint8_t AES_KEY[16] = {
   0x00, 0x11, 0x22, 0x33,
   0x44, 0x55, 0x66, 0x77,
   0x88, 0x99, 0xAA, 0xBB,
   0xCC, 0xDD, 0xEE, 0xFF
 };
-
-// Generic project identifiers only; no personal/device identity is embedded.
 static const char *NODE_ROLE = "GROUND_NODE";
-
-// SX1278 wiring verified for the demonstrated ESP32 ground receiver.
 static const int LORA_SS   = 5;
 static const int LORA_RST  = 14;
 static const int LORA_DIO0 = 2;
 static const long LORA_FREQ = 433E6;
-
 static const size_t NONCE_LEN = 12;
 static const size_t TAG_LEN   = 16;
 static const uint8_t MAGIC0 = 'A';
 static const uint8_t MAGIC1 = 'C';
 static const uint8_t VERSION = 1;
-
 uint32_t acceptedPackets = 0;
 uint32_t rejectedPackets = 0;
 
@@ -69,7 +36,7 @@ bool decryptGCM(const uint8_t *ciphertext, size_t cipherLen,
     &gcm,
     cipherLen,
     nonce, NONCE_LEN,
-    nullptr, 0,          // No AAD in the public packet format.
+    nullptr, 0,          
     tag, TAG_LEN,
     ciphertext,
     plaintext
@@ -80,11 +47,8 @@ bool decryptGCM(const uint8_t *ciphertext, size_t cipherLen,
 }
 
 void printTelemetry(const char *plain, int rssi, float snr) {
-  // Dashboard contract used by the AeroCrypt monitoring application.
   Serial.print("STREAMLIT_TELEMETRY:");
   Serial.println(plain);
-
-  // Diagnostic line; the dashboard parser can ignore non-telemetry lines.
   Serial.print("AEROCRYPT_LINK,RSSI=");
   Serial.print(rssi);
   Serial.print(",SNR=");
