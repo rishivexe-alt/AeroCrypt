@@ -1,28 +1,3 @@
-/*
-  AeroCrypt - ESP32 UAV Telemetry Transmitter
-  PUBLIC-SAFE BASELINE / REFERENCE IMPLEMENTATION
-
-  This file defines the public packet contract used by the companion
-  ground receiver. Sensor pin assignments are intentionally configurable
-  because the exact transmitter wiring must match the physical build.
-
-  Required libraries:
-    - LoRa
-    - Adafruit BMP280
-    - Adafruit MPU6050
-    - TinyGPSPlus (only if GPS telemetry is enabled)
-
-  Packet:
-    [MAGIC 2B][VERSION 1B][NONCE 12B][CIPHERTEXT N B][TAG 16B]
-
-  Plaintext:
-    packet,temp,pressure,ax,ay,az,gx,gy,gz
-
-  IMPORTANT:
-    The AES key below is a public placeholder only. Never publish a real
-    cryptographic key or credentials.
-*/
-
 #include <Wire.h>
 #include <SPI.h>
 #include <LoRa.h>
@@ -32,7 +7,6 @@
 #include "mbedtls/gcm.h"
 #include "esp_system.h"
 
-// ---------------- PUBLIC-SAFE CONFIGURATION ----------------
 static const uint8_t AES_KEY[16] = {
   0x00, 0x11, 0x22, 0x33,
   0x44, 0x55, 0x66, 0x77,
@@ -40,11 +14,8 @@ static const uint8_t AES_KEY[16] = {
   0xCC, 0xDD, 0xEE, 0xFF
 };
 
-// Generic role only; no personal/device identity.
 static const char *NODE_ROLE = "UAV_NODE";
 
-// Use the same SX1278 wiring as the demonstrated LoRa configuration.
-// Confirm these against your actual transmitter wiring before flight.
 static const int LORA_SS   = 5;
 static const int LORA_RST  = 14;
 static const int LORA_DIO0 = 2;
@@ -78,7 +49,7 @@ bool encryptGCM(const uint8_t *plaintext, size_t plainLen,
     MBEDTLS_GCM_ENCRYPT,
     plainLen,
     nonce, NONCE_LEN,
-    nullptr, 0,          // No AAD in this public packet format.
+    nullptr, 0,          
     plaintext,
     ciphertext,
     TAG_LEN,
