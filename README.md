@@ -209,3 +209,8 @@ Remove propellers during bench testing of motors and control electronics. Follow
 ## Project Scope
 
 AeroCrypt is documented as a secure UAV telemetry and monitoring prototype. It does not claim autonomous flight control, a machine-learning IDS, GPS mapping, or a universal radio-performance benchmark unless those features are separately implemented and experimentally validated.
+
+## Author
+
+**Rishi P.**  
+Electronics & Communication Engineering  
