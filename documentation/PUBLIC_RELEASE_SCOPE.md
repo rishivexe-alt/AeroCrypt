@@ -27,6 +27,3 @@ This repository is intentionally limited to public-safe AeroCrypt material.
 - private development paths
 - unverified/fabricated implementation claims
 
-## Project Separation
-
-Industrial IoT/MQTT/gas/distance/SQLite material from the separate prototype is not included in AeroCrypt.
