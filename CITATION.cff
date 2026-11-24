@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use or reference AeroCrypt, please cite this project."
+title: "AeroCrypt: AES-128-GCM Secured Long-Range UAV Telemetry and Ground Monitoring"
+type: software
+authors:
+  - family-names: "P."
+    given-names: "Rishi"
+version: "1.0.0"
+date-released: "2026-11-24"

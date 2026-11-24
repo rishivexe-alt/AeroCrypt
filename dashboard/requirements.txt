@@ -1,0 +1,4 @@
+streamlit>=1.36,<2.0
+pyserial>=3.5,<4.0
+pandas>=2.2,<4.0
+plotly>=5.22,<7.0
